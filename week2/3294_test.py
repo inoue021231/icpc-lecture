@@ -6,13 +6,13 @@ while True:
 
     words_list = []
     for _ in range(N):
-        words_list.append(list(input()))
+        words_list.append(input())
 
-    # ソート結果の確認
     words_list.sort(key=len)
 
     index = 0
     answer = 0
+
     while index < N:
         same_length_list = [words_list[index]]
         
@@ -49,3 +49,17 @@ while True:
 
         index += 1
     print(answer)
+
+'''
+16
+39
+2
+6
+80
+7237
+7201
+27223
+26220
+21411
+9
+'''
