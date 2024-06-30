@@ -30,23 +30,22 @@ while True:
             answer += len(same_length_list[0]) - 2
         else:
             for i in range(len(same_length_list)):
-                j = 0
-                while j < (len(same_length_list[i]) // 2 + 1):
+                j = 1
+                max_length = 0
+                while j < len(same_length_list[i]):
                     flag = 0
-
-                    for k in range(len(same_length_list)):
-                        if k == i:
-                            continue
-                        if same_length_list[i][:j+1] == same_length_list[k][:j+1] and same_length_list[i][-(j+1):] == same_length_list[k][-(j+1):]:
+                    k = j
+                    while k < len(same_length_list[i]):
+                        for l in range(len(same_length_list)):
+                          if l != i and same_length_list[i][:j+1] == same_length_list[l][:j+1] and same_length_list[i][-(k+1):] == same_length_list[l][-(k+1):]:
                             flag = 1
-                            break
-                    
+                          print(i,j,k,l)
+                        k += 1
                     if flag == 0:
-                        answer += len(same_length_list[i]) - 2 - j
+                        max_length = max(max_length, k - j + 1)
                         break
-                    
                     j += 1
-
+                answer += max_length
         index += 1
     print(answer)
 
