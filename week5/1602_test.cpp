@@ -2,52 +2,106 @@
 using namespace std;
 using ll = long long;
 
-int solve(vector<string> s) {
-  int ans = 0;
+ll solve(vector<string> s) {
+  ll ans = 0;
+
   if(s.size() == 0) {
     return 0;
   }
+
+  ll base_len = 1;
+  
   if(s[0][0] == '+') {
     vector<string> ss, sss;
-    for(int i = 1; i < s.size(); i++) {
-      if(s[i][1] == '.') {
-        for(int j = 1; j < s[i].length();j++) {
-
+    ll i = 1;
+    while(i < s.size()) {
+      if(s[i][1] == '+' || s[i][1] == '*') {
+        ll end_index = i+1;
+        while(end_index < s.size()) {
+          if(s[end_index].length() == 2) {
+            break;
+          }
+          end_index++;
         }
-        ss.push_back(s[i]);
-      } else if(s[i][1] == '+') {
-        ans += solve(ss);
-      } else if(s[i][1] == '*') {
 
+        if(end_index >= s.size()) end_index--;
+
+        for(ll j = i; j <= end_index; j++) {
+          string ssss = "";
+          for(ll k = 1; k < s[j].length(); k++) {
+            ssss += s[j][k];
+          }
+          sss.push_back(ssss);
+        }
+
+        /* for(ll j = 0; j < sss.size(); j++) {
+          cout << sss[j] << endl;
+        } */
+        i = end_index;
       } else {
         ans += int(s[i][1]);
+        cout << s[i][1] << endl;
+        i++;
       }
     }
     ans += solve(ss);
   } else if(s[0][0] == '*') {
-    
+    vector<string> ss, sss;
+    ll i = 1;
+    while(i < s.size()) {
+      if(s[i][1] == '+' || s[i][1] == '*') {
+        ll end_index = i+1;
+        while(end_index < s.size()) {
+          if(s[end_index].length() == 2) {
+            break;
+          }
+          end_index++;
+        }
+
+        if(end_index >= s.size()) end_index--;
+
+        for(ll j = i; j <= end_index; j++) {
+          string ssss = "";
+          for(ll k = 1; k < s[j].length(); k++) {
+            ssss += s[j][k];
+          }
+          sss.push_back(ssss);
+        }
+
+        /* for(ll j = 0; j < sss.size(); j++) {
+          cout << sss[j] << endl;
+        } */
+        i = end_index;
+      } else {
+        cout << s[i][1] << endl;
+        ans *= int(s[i][1]);
+        i++;
+      }
+    }
+    ans *= solve(ss);
   }
-  return 0;
+  return ans;
 }
 
 int main() {
   while(true) {
-    int n;
+    ll n;
     cin >> n;
     if(n == 0) {
       break;
     }
     vector<string> S(n);
-    for(int i = 0; i < n; i++) cin >> S[i];
+    for(ll i = 0; i < n; i++) cin >> S[i];
 
     if(n == 1) {
       cout << S[0] << endl;
       continue;
     }
 
-    for(int i = 0; i < n; i++) {
+   /*  for(ll i = 0; i < n; i++) {
       cout << S[i] << endl;
-    }
+    } */
+    cout << solve(S) << endl;
   }
   return 0;
 }
